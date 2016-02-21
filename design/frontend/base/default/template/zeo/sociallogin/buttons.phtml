@@ -1,0 +1,53 @@
+<button onclick="fblogin()" class="button btn btn-block btn-social btn-facebook">
+    <span class="fa fa-facebook"></span> Sign in with Facebook
+</button>
+
+<script type="text/javascript">
+	var  zeo_app_id= '<?php echo Mage::helper("sociallogin")->getFacebookAppID() ?>';
+	var zeo_callback_url='<?php echo Mage::helper("sociallogin")->getFacebookCallbackUrl() ?>';
+	
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : zeo_app_id, // App ID
+            status     : true, // check login status
+            cookie     : true, // enable cookies to allow the server to access the session
+            xfbml      : true  // parse XFBML
+        });
+    };
+
+    // Load the SDK Asynchronously
+    (function(d){
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+    }(document));
+
+    function greet(id){
+        FB.api('/me', function(response) {
+            var src = 'https://graph.facebook.com/'+id+'/picture';
+            $$('.welcome-msg')[0].insert('<img height="20" src="'+src+'"/>');
+        });
+    }
+
+    function fblogin(){
+        
+        try {
+            FB.login(function(response) {
+                if (response.status == 'connected') {
+                    var url = zeo_callback_url;
+                    document.location.href=url;
+                } else if (response.status === 'not_authorized') {
+                    alert('Please, approve our application');
+                } else {
+                    // user is not logged in
+                    window.location.reload();
+                }
+            }, {scope:'email'});
+        } catch (err) {
+            fblogin();
+        }
+        return false;
+    }
+</script>  

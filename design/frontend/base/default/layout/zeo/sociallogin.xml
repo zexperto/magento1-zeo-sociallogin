@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<customer_account_login>
+		<reference name="customer_form_login">
+			<block type="customer/form_login" name="zeo.sociallogin.buttons" template="zeo/sociallogin/buttons.phtml" before="customer_form_login" />
+		</reference>
+	</customer_account_login>
+</layout>
