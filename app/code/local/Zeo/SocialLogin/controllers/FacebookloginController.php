@@ -47,7 +47,10 @@ class Zeo_SocialLogin_FacebookloginController extends Mage_Core_Controller_Front
     curl_setopt($request, CURLOPT_URL, $url);
     curl_setopt($request, CURLOPT_RETURNTRANSFER, TRUE);
     $data         = curl_exec($request);
-    $data         = file_get_contents($url);
+    curl_close($request);
+
+    if($data=="")
+        $data         = file_get_contents($url);
     $data_array   = explode("=",$data);
     $access_token = $data_array[1];
 
