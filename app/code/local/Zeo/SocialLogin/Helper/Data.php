@@ -20,30 +20,31 @@ class Zeo_SocialLogin_Helper_Data extends Mage_Core_Helper_Abstract
 		$callback_url= Mage::getUrl('sociallogin/facebooklogin');//'http://localhost/facebook/using-js/sfb-callback.php';
 		return  $callback_url;
 	}
-	static function processFacebookUser($user){
-		$result=array("error"=>false,"message"=>"");
-		$email=$user->email;
-		$oCustomer=Mage::getModel('customer/customer')->getCollection()
-					->addAttributeToFilter("email",$email)->getFirstItem()	;
-		$customer_id=$oCustomer->getEntityId();
-		if($customer_id==0){
-			$customer_id= Mage::helper('sociallogin')->CreateNewCustomer($user);			
-		}
-		
-		if($customer_id>0){
-			 Mage::getSingleton ( 'customer/session' )->loginById ( $customer_id );
-		}else{
-			$result["error"]=true;
-			$result["message"]="Error in login";	
-		}
-		
-		
-		return $result;
+	
+	static function processUser($user_data){
+	    $result=array("error"=>false,"message"=>"");
+	    $email=$user_data["email"];
+	    $oCustomer=Mage::getModel('customer/customer')->getCollection()
+	    ->addAttributeToFilter("email",$email)->getFirstItem()	;
+	    $customer_id=$oCustomer->getEntityId();
+	    if($customer_id==0){
+	        $customer_id= Mage::helper('sociallogin')->CreateNewCustomer($user_data);
+	    }
+	
+	    if($customer_id>0){
+	        Mage::getSingleton ( 'customer/session' )->loginById ( $customer_id );
+	    }else{
+	        $result["error"]=true;
+	        $result["message"]="Error in login";
+	    }
+	
+	
+	    return $result;
 	}
-	static function CreateNewCustomer($user){
-		$email=$user->email;
-		$first_name=$user->first_name;
-		$last_name=$user->last_name;
+	static function CreateNewCustomer($user_data){
+		$email=$user_data["email"];
+		$first_name=$user_data["first_name"];
+		$last_name=$user_data["last_name"];
 		$customer=Mage::getModel('customer/customer')
 						->setEmail($email)
 						->setFirstname($first_name)

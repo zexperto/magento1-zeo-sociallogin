@@ -58,7 +58,17 @@ class Zeo_SocialLogin_FacebookloginController extends Mage_Core_Controller_Front
 
     $response     = file_get_contents($user_details);
     $user         = json_decode($response);
-    $result       = Mage::helper('sociallogin')->processFacebookUser($user);
+     
+    $email=$user->email;
+    $first_namee=$user->first_name;
+    $last_name=$user->last_name;
+    
+    $user_data=array(
+        "first_name"=>$first_namee,
+        "last_name"=>$last_name,
+        "email"=>$email,
+    );
+    $result       = Mage::helper('sociallogin')->processUser($user_data);
   	  if ($result["error"] == false) {
       Mage::getSingleton('core/session')->addSuccess($this->__('You have succesfully logged in using Facebook'));
       $this->_redirectError($accountUrl);

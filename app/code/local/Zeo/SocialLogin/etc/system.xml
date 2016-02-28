@@ -19,7 +19,7 @@
 				<facebook translate="label">
 					<label>Facebook setting</label>
 					<frontend_type>text</frontend_type>
-					<sort_order>20</sort_order>
+					<sort_order>10</sort_order>
 					<show_in_default>1</show_in_default>
 					<show_in_website>1</show_in_website>
 					<show_in_store>1</show_in_store>
@@ -43,6 +43,34 @@
 					
 					</fields>
 				</facebook>
+				<google translate="label">
+					<label>Google setting</label>
+					<comment>Please set the redirect url in google to {Base URL}/index.php/sociallogin/googlelogin/</comment>
+					<frontend_type>text</frontend_type>
+					<sort_order>20</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<client_id translate="label">
+							<label>Client ID</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+						</client_id>
+						<client_secret translate="label">
+							<label>Client Secret</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+						</client_secret>
+					
+					</fields>
+				</google>
 			</groups>
 		</zeo_sociallogin_setting>
 	</sections>

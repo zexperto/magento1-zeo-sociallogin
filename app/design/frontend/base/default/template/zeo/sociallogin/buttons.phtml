@@ -1,12 +1,29 @@
+<?php 
+
+
+// google setting
+$client_id =Mage::getModel("sociallogin/google")->getGoogleClientID();; //your client id
+$client_secret =Mage::getModel("sociallogin/google")->getGoogleClientSecret();; //your client secret
+$redirect_uri = Mage::getModel("sociallogin/google")->getGoogleCallbackUrl();//"http://localhost/oauth2callback.php";
+
+$scope = "https://www.googleapis.com/auth/userinfo.email"; //google scope to access
+$state = "profile"; //optional
+$google_loginUrl = sprintf("https://accounts.google.com/o/oauth2/auth?scope=%s&state=%s&redirect_uri=%s&response_type=code&client_id=%s",$scope,$state,$redirect_uri,$client_id);
+?>
+
 <button onclick="fblogin()" class="button btn btn-block btn-social btn-facebook">
-    <span class="fa fa-facebook"></span> Sign in with Facebook
+    <span class="fa fa-facebook"></span> <?php echo $this->__("Sign in with Facebook") ?>
+</button>
+
+<button onclick="googlelogin()" class="button btn btn-block btn-social btn-google">
+    <span class="fa fa-google-plus-square"></span> <?php echo $this->__("Sign in with Google") ?>
 </button>
 
 <script type="text/javascript">
 	var  zeo_app_id= '<?php echo Mage::helper("sociallogin")->getFacebookAppID() ?>';
 	var zeo_callback_url='<?php echo Mage::helper("sociallogin")->getFacebookCallbackUrl() ?>';
 	if(zeo_app_id==""){
-		alert("Please set up the App ID in System->configuration {social login extension}");
+		alert("Please set up the App ID in System->configuration");
 	}
     window.fbAsyncInit = function() {
         FB.init({
@@ -51,5 +68,11 @@
             fblogin();
         }
         return false;
+    }
+    // Google
+    
+    var google_url='<?php echo $google_loginUrl; ?>';
+    function googlelogin(){
+		document.location=google_url;
     }
 </script>  
