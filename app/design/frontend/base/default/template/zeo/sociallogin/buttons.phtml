@@ -5,7 +5,9 @@
 <script type="text/javascript">
 	var  zeo_app_id= '<?php echo Mage::helper("sociallogin")->getFacebookAppID() ?>';
 	var zeo_callback_url='<?php echo Mage::helper("sociallogin")->getFacebookCallbackUrl() ?>';
-	
+	if(zeo_app_id==""){
+		alert("Please set up the App ID in System->configuration {social login extension}");
+	}
     window.fbAsyncInit = function() {
         FB.init({
             appId      : zeo_app_id, // App ID
